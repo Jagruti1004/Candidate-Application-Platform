@@ -1,0 +1,29 @@
+.job-heading-box{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.job-heading-info-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.job-heading-info-title{
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+    color: #8b8b8b;
+}
+
+.job-heading-info-sub-title{
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.job-heading-info-container>p{
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 5px;
+}

@@ -1,0 +1,9 @@
+.detail-pill-box{
+    width: fit-content;
+    padding: 0.25rem 0.375rem;
+    font-size: 0.563rem;
+    line-height: 1.5;
+    border: 0.063rem solid rgb(230, 230, 230);
+    border-radius: 0.625rem;
+    box-shadow: 0rem 0.125rem 0.375rem 0rem rgba(6, 6, 6, 0.05);
+}
