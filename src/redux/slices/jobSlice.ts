@@ -3,21 +3,17 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
-const body = JSON.stringify({
-  limit: 10,
-  offset: 0,
-});
-
-const requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body,
-};
-
-export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
+export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async (offset: number) => {
   const response = await fetch(
     "https://api.weekday.technology/adhoc/getSampleJdJSON",
-    requestOptions
+    {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        limit: 10,
+        offset,
+      }),
+    }
   );
 
   if (!response.ok) {
@@ -32,6 +28,7 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
 const initialState: any = {
   jobs: [],
   total: 0,
+  jobRoles: [],
   loading: false,
   error: null,
 };
@@ -48,10 +45,15 @@ const jobSlice = createSlice({
       })
       .addCase(fetchJobs.fulfilled, (state, action) => {
         console.log("hello", action);
-        state.loading = true;
+        state.loading = false;
         state.error = null;
-        state.jobs = action.payload.jdList;
+        state.jobs = [...state.jobs, ...action.payload.jdList];
         state.total = action.payload.total;
+        state.jobRoles = [
+          ...(new Set(
+            action.payload.jdList.map((job: any) => job.jobRole)
+          ) as any),
+        ];
       })
       .addCase(fetchJobs.rejected, (state, action) => {
         state.loading = false;
