@@ -160,7 +160,7 @@ function App() {
       {currentJobs.length > 0 && (
         <div className="page-container">
           <Grid container spacing={2} marginBottom={6}>
-            <Grid item xs={3}>
+            <Grid item sm={3} xs={12}>
               <CustomizedHook
                 options={jobRoles}
                 id="job-roles"
@@ -168,7 +168,7 @@ function App() {
                 multiSelect={true}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={3} xs={12}>
               <CustomizedHook
                 options={Array.from(
                   { length: maximumExperience + 1 },
@@ -179,7 +179,7 @@ function App() {
                 multiSelect={false}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={3} xs={12}>
               <CustomizedHook
                 options={locations}
                 id="job-locations"
@@ -187,7 +187,7 @@ function App() {
                 multiSelect={true}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={3} xs={12}>
               <CustomizedHook
                 options={["remote", "on-site"]}
                 id="job-working-model"
@@ -195,7 +195,7 @@ function App() {
                 multiSelect={true}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={3} xs={12}>
               <CustomizedHook
                 options={Array.from(
                   { length: Math.floor(maximumMinSalary / 10) + 1 },
@@ -210,7 +210,7 @@ function App() {
           <Grid container spacing={2}>
             {currentJobs.map((data: any) => {
               return (
-                <Grid item xs={4}>
+                <Grid item sm={4} xs={12}>
                   <JobCard job={data} />
                 </Grid>
               );
