@@ -37,7 +37,7 @@ function App() {
       if (filters !== initialState.filters) {
         let filtered = jobs;
         if (filters.jobRoles.length > 0) {
-           filtered = filtered.filter((job: any) => {
+          filtered = filtered.filter((job: any) => {
             return Boolean(
               filters.jobRoles.find((role: string) => role === job.jobRole)
             );
@@ -45,17 +45,40 @@ function App() {
         }
         if (filters.locations.length > 0) {
           filtered = filtered.filter((job: any) => {
-           return Boolean(
-             filters.locations.find((role: string) => role === job.location)
-           );
-         });
-       }
+            return Boolean(
+              filters.locations.find((role: string) => role === job.location)
+            );
+          });
+        }
 
-       if (filters.experience > 0) {
-        filtered = filtered.filter((job: any) => {
-          return job.minExp <= filters.experience;
-        });
-     }
+        if (filters.experience > 0) {
+          filtered = filtered.filter((job: any) => {
+            return job.minExp <= filters.experience;
+          });
+        }
+
+        if (Number(filters.minSalary.split(" LPA")[0]) > 0) {
+          filtered = filtered.filter((job: any) => {
+            return (
+              (job.minJdSalary &&
+                job.minJdSalary >=
+                  Number(filters.minSalary.split(" LPA")[0])) ||
+              (!job.minJdSalary &&
+                job.maxJdSalary >= Number(filters.minSalary.split(" LPA")[0]))
+            );
+          });
+        }
+
+        if (filters.mode.length > 0 && filters.mode.length !== 2) {
+          filtered =
+            filters.mode === "remote"
+              ? filtered.filter((job: any) => {
+                  return "remote" !== job.location;
+                })
+              : filtered.filter((job: any) => {
+                  return "remote" === job.location;
+                });
+        }
         setCurrentJobs(filtered);
       } else setCurrentJobs(jobs);
     }
@@ -63,8 +86,8 @@ function App() {
 
   useEffect(() => {
     console.log("filters", filters);
-    if (currentJobs.length > 0) {
-      let filtered = currentJobs;
+    if (jobs.length > 0) {
+      let filtered = jobs;
       if (filters.jobRoles.length > 0) {
         filtered = filtered.filter((job: any) => {
           return Boolean(
@@ -87,6 +110,28 @@ function App() {
         filtered = filtered.filter((job: any) => {
           return job.minExp <= filters.experience;
         });
+      }
+      if (Number(filters.minSalary.split(" LPA")[0]) > 0) {
+        console.log("i am inside salary");
+        filtered = filtered.filter((job: any) => {
+          return (
+            (job.minJdSalary &&
+              job.minJdSalary >= Number(filters.minSalary.split(" LPA")[0])) ||
+            (!job.minJdSalary &&
+              job.maxJdSalary >= Number(filters.minSalary.split(" LPA")[0]))
+          );
+        });
+      }
+
+      if (filters.mode.length > 0 && filters.mode.length !== 2) {
+        filtered =
+          filters.mode === "remote"
+            ? filtered.filter((job: any) => {
+                return "remote" !== job.location;
+              })
+            : filtered.filter((job: any) => {
+                return "remote" === job.location;
+              });
       }
       setCurrentJobs(filtered);
     }

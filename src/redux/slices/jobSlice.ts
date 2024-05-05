@@ -38,7 +38,7 @@ export const initialState: any = {
   filters:{
     jobRoles: [],
     experience: 0,
-    minSalary: 0,
+    minSalary: '0 LPA',
     locations: [],
     mode: [],
   },
