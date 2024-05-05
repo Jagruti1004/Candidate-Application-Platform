@@ -1,0 +1,44 @@
+.job-card-footer {
+    margin-top: -2rem;
+    padding-top: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.job-card-footer>a {
+    color: #4943da;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.job-card-footer-experience {
+    align-self: start;
+    margin-bottom: 0.75rem;
+}
+
+.job-card-footer-experience-title {
+    font-size: 0.813rem;
+    font-weight: 600;
+    letter-spacing: 0.063rem;
+    margin-bottom: 0.188rem;
+    color: #8b8b8b;
+}
+
+.job-card-footer-experience-value {
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.job-card-footer-easy-apply-button {
+    width: 100%;
+    background-color: rgb(85, 239, 196) !important;
+    color: rgb(0, 0, 0) !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1.125rem !important;
+    margin-top: 0.938rem !important;
+    font-size: 1rem !important;
+    border-radius: 0.5rem !important;
+}

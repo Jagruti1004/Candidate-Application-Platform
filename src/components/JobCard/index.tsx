@@ -1,16 +1,22 @@
+import { useMemo } from "react";
 import DetailPill from "../DetailPill";
+import JobFooter from "../JobFooter";
 import JobHeading from "../JobHeading";
 import "./style.css";
 import { Button, Card, Typography } from "@mui/material";
 
 function JobCard({ job }: any) {
-  console.log(job.companyName, "joss");
+  const salaryText = useMemo(() => {
+    if (job.minJdSalary && job.maxJdSalary)
+      return `${job.minJdSalary} - ${job.maxJdSalary} LPA`;
+    else return `${job.maxJdSalary || job.minJdSalary} LPA`;
+  }, [job.minJdSalary, job.maxJdSalary]);
   return (
     <Card variant="outlined" className="job-card-box">
       <div className="job-card-tags">
         <DetailPill />
       </div>
-      <div className="job-card-mid">
+      <div className="job-card-section">
         <JobHeading
           companyName={job.companyName}
           logoUrl={job.logoUrl}
@@ -18,28 +24,15 @@ function JobCard({ job }: any) {
           location={job.location}
         />
         <Typography fontSize={14} fontWeight={400}>
-          Estimated Salary: {job.minJdSalary}-{job.maxJdSalary}Lpa
-          <span>Icon</span>
+          Estimated Salary: &#8377;{salaryText}
+          <span> ✅</span>
         </Typography>
         <div className="job-card-about-title">About Company</div>
         <div className="job-card-about-sub-title">
           <strong>About us</strong>
         </div>
         <div className="job-card-about">{job.jobDetailsFromCompany}</div>
-        <div className="job-card-footer">
-          <div className="job-card-footer-view-job">View Job</div>
-          <div className="job-card-footer-experience">
-            <div className="job-card-footer-experience-title">
-              Minimum Experience
-            </div>
-            <div className="job-card-footer-experience-value">
-              {job.minExp} years
-            </div>
-          </div>
-          <Button className="job-card-footer-easy-apply-button">
-            ⚡ Easy Apply
-          </Button>
-        </div>
+        <JobFooter minExp={job.minExp} jdLink={job.jdLink} />
       </div>
     </Card>
   );

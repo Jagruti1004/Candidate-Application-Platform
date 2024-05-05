@@ -1,29 +1,30 @@
-.job-heading-box{
+.job-heading-box {
     display: flex;
     gap: 0.5rem;
 }
 
-.job-heading-info-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+.job-heading-box>img {
+    width: 1.563rem;
+    height: 2.5rem;
 }
 
-.job-heading-info-title{
-    font-size: 13px;
+.job-heading-info-company {
+    font-size: 0.813rem;
     font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 3px;
+    letter-spacing: 0.063rem;
+    margin-bottom: 0.188rem;
     color: #8b8b8b;
 }
 
-.job-heading-info-sub-title{
-    font-size: 14px;
+.job-heading-info-role {
+    font-size: 0.875rem;
     line-height: 1.5;
+    text-transform: capitalize;
 }
 
-.job-heading-info-container>p{
-    font-size: 11px;
+.job-heading-info-location {
+    font-size: 0.688rem;
     font-weight: 500;
-    margin-top: 5px;
+    margin-top: 0.313rem;
+    text-transform: capitalize;
 }

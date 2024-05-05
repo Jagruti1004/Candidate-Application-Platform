@@ -1,16 +1,22 @@
 import "./style.css";
 import { Box } from "@mui/material";
 
-function JobHeading({companyName, logoUrl, jobRole, location}: any) {
-  console.log('kkk', companyName, logoUrl)
+type props = {
+ companyName: string;
+ logoUrl: string;
+ jobRole: string;
+ location: string;
+}
+
+function JobHeading({ companyName, logoUrl, jobRole, location }: props) {
   return (
     <Box className="job-heading-box">
-      <img src={logoUrl} height={32} />
-      <div className="job-heading-info-container">
-        <div className="job-heading-info-title">{companyName}</div>
-        <div className="job-heading-info-sub-title">{jobRole}</div>
-        <p>{location}</p>
-      </div>
+      {logoUrl && <img src={logoUrl} />}
+      <Box>
+        <div className="job-heading-info-company">{companyName}</div>
+        <div className="job-heading-info-role">{jobRole}</div>
+        <p className="job-heading-info-location">{location}</p>
+      </Box>
     </Box>
   );
 }

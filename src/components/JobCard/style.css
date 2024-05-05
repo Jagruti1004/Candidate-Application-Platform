@@ -1,89 +1,44 @@
-.job-card-box{
-    border-radius: 20px !important;
-    padding: 5px !important;
+.job-card-box {
+    border-radius: 1.25rem !important;
+    padding: 0.313rem !important;
     background-color: rgb(255, 255, 255);
     color: rgba(0, 0, 0, 0.87);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-radius: 4px;
     overflow: hidden;
-    max-width: 360px;
-    padding: 10px 5px !important;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px 0px !important;
+    max-width: 22.5rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 0.063rem 0.25rem 0 !important;
 }
 
-.job-card-tags{
+.job-card-tags {
     display: flex;
     align-items: flex-start;
-    padding: 5px 10px;
+    padding: 0.313rem 0.625rem;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 0.313rem;
     width: 100%;
     flex: 1 1 0%;
 }
 
-.job-card-mid{
+.job-card-section {
     flex: 1 1 0%;
-    padding: 8px 16px;
+    padding: 0.5rem 1rem;
 }
 
-.job-card-about-title{
-    font-family: __LexendFont_7838d2, __LexendFont_Fallback_7838d2;
+.job-card-about-title {
     font-size: 1rem;
     line-height: 1.5;
     font-weight: 500;
+    margin-top: 0.5rem;
 }
 
-.job-card-about-sub-title{
+.job-card-about-sub-title {
     white-space: pre-wrap;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
-.job-card-about{
+.job-card-about {
     height: 14rem;
     overflow: hidden;
     mask-image: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0));
-}
-
-.job-card-footer{
-    margin-top: -2rem;
-    padding-top: 1.8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.job-card-footer-view-job{
-    color: rgb(73, 67, 218);
-    text-decoration: none;
-    font-size: 14px !important;
-    font-weight: 400 !important;
-    margin-bottom: 10px;
-}
-
-.job-card-footer-experience {
-    margin-top: 10px;
-    align-self: start;
-}
-
-.job-card-footer-experience-title {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 3px;
-    color: #8b8b8b;
-}
-
-.job-card-footer-experience-value {
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.job-card-footer-easy-apply-button{
-    width: 100%;
-    background-color: rgb(85, 239, 196) !important;
-    color: rgb(0, 0, 0) !important;
-    font-weight: 500 !important;
-    padding: 8px 18px;
-    margin-top: 15px !important;
-    font-size: 16px !important;
+    font-size: 0.875rem;
 }
