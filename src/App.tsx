@@ -1,18 +1,25 @@
 import React, { useEffect, useState, useCallback } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import JobCard from "./components/JobCard";
 import CustomizedHook from "./Select";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
-import { fetchJobs } from "./redux/slices/jobSlice";
+import { fetchJobs, initialState } from "./redux/slices/jobSlice";
 
 function App() {
   const dispatch = useDispatch<any>();
-  const { jobs, jobRoles, loading, error } = useSelector(
-    (state: RootState) => state.jobs
-  );
+  const {
+    jobs,
+    jobRoles,
+    maximumExperience,
+    maximumMinSalary,
+    locations,
+    filters,
+    loading,
+    error,
+  } = useSelector((state: RootState) => state.jobs);
   const [currentJobs, setCurrentJobs] = useState([]);
   const [page, setPage] = useState(0);
 
@@ -23,12 +30,67 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchJobs(0));
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    console.log(jobs, "mc");
-    if (jobs.length > 0) setCurrentJobs(jobs);
+    if (jobs.length > 0) {
+      if (filters !== initialState.filters) {
+        let filtered = jobs;
+        if (filters.jobRoles.length > 0) {
+           filtered = filtered.filter((job: any) => {
+            return Boolean(
+              filters.jobRoles.find((role: string) => role === job.jobRole)
+            );
+          });
+        }
+        if (filters.locations.length > 0) {
+          filtered = filtered.filter((job: any) => {
+           return Boolean(
+             filters.locations.find((role: string) => role === job.location)
+           );
+         });
+       }
+
+       if (filters.experience > 0) {
+        filtered = filtered.filter((job: any) => {
+          return job.minExp <= filters.experience;
+        });
+     }
+        setCurrentJobs(filtered);
+      } else setCurrentJobs(jobs);
+    }
   }, [jobs]);
+
+  useEffect(() => {
+    console.log("filters", filters);
+    if (currentJobs.length > 0) {
+      let filtered = currentJobs;
+      if (filters.jobRoles.length > 0) {
+        filtered = filtered.filter((job: any) => {
+          return Boolean(
+            filters.jobRoles.find((role: string) => role === job.jobRole)
+          );
+        });
+      }
+      if (filters.locations.length > 0) {
+        console.log("i am inside locations");
+        filtered = filtered.filter((job: any) => {
+          return Boolean(
+            filters.locations.find(
+              (location: string) => location === job.location
+            )
+          );
+        });
+      }
+      if (filters.experience > 0) {
+        console.log("i am inside experience");
+        filtered = filtered.filter((job: any) => {
+          return job.minExp <= filters.experience;
+        });
+      }
+      setCurrentJobs(filtered);
+    }
+  }, [filters]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,12 +114,54 @@ function App() {
     <div className="App">
       {currentJobs.length > 0 && (
         <div className="page-container">
-          <CustomizedHook
-            options={jobRoles}
-            id="job-roles"
-            label="Roles"
-            multiSelect={true}
-          />
+          <Grid container spacing={2} marginBottom={6}>
+            <Grid item xs={3}>
+              <CustomizedHook
+                options={jobRoles}
+                id="job-roles"
+                label="Roles"
+                multiSelect={true}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CustomizedHook
+                options={Array.from(
+                  { length: maximumExperience + 1 },
+                  (v, k) => k
+                )}
+                id="job-experience"
+                label="Experience"
+                multiSelect={false}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CustomizedHook
+                options={locations}
+                id="job-locations"
+                label="Location"
+                multiSelect={true}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CustomizedHook
+                options={["remote", "on-site"]}
+                id="job-working-model"
+                label="Remote"
+                multiSelect={true}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <CustomizedHook
+                options={Array.from(
+                  { length: Math.floor(maximumMinSalary / 10) + 1 },
+                  (v, k) => `${k * 10} LPA`
+                )}
+                id="job-salary"
+                label="Min Base Pay"
+                multiSelect={false}
+              />
+            </Grid>
+          </Grid>
           <Grid container spacing={2}>
             {currentJobs.map((data: any) => {
               return (
@@ -69,7 +173,18 @@ function App() {
           </Grid>
         </div>
       )}
-      {loading && <div>Loading</div>}
+      {loading && (
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "center",
+            marginTop: "1rem",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
     </div>
   );
 }

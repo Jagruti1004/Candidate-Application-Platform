@@ -1,34 +1,41 @@
-import * as React from 'react';
-import { useAutocomplete, AutocompleteGetTagProps } from '@mui/base/useAutocomplete';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/material/styles';
-import { autocompleteClasses } from '@mui/material/Autocomplete';
-import './style.css';
+import * as React from "react";
+import {
+  useAutocomplete,
+  AutocompleteGetTagProps,
+} from "@mui/base/useAutocomplete";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import { styled } from "@mui/material/styles";
+import { autocompleteClasses } from "@mui/material/Autocomplete";
+import "./style.css";
+import { useDispatch } from "react-redux";
+import { setFilters } from "../redux/slices/jobSlice";
 
-const InputWrapper = styled('div')(
+const InputWrapper = styled("div")(
   ({ theme }) => `
   width: 300px;
-  border: 1px solid ${theme.palette.mode === 'dark' ? '#434343' : '#d9d9d9'};
-  background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
+  border: 1px solid ${theme.palette.mode === "dark" ? "#434343" : "#d9d9d9"};
+  background-color: ${theme.palette.mode === "dark" ? "#141414" : "#fff"};
   border-radius: 4px;
   padding: 1px;
   display: flex;
   flex-wrap: wrap;
 
   &:hover {
-    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
+    border-color: ${theme.palette.mode === "dark" ? "#177ddc" : "#40a9ff"};
   }
 
   &.focused {
-    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
+    border-color: ${theme.palette.mode === "dark" ? "#177ddc" : "#40a9ff"};
     box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
   }
 
   & input {
-    background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
+    background-color: ${theme.palette.mode === "dark" ? "#141414" : "#fff"};
     color: ${
-      theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,.85)'
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,0.65)"
+        : "rgba(0,0,0,.85)"
     };
     height: 30px;
     box-sizing: border-box;
@@ -40,7 +47,7 @@ const InputWrapper = styled('div')(
     margin: 0;
     outline: 0;
   }
-`,
+`
 );
 
 interface TagProps extends ReturnType<AutocompleteGetTagProps> {
@@ -65,9 +72,9 @@ const StyledTag = styled(Tag)<TagProps>(
   margin: 2px;
   line-height: 22px;
   background-color: ${
-    theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : '#fafafa'
+    theme.palette.mode === "dark" ? "rgba(255,255,255,0.08)" : "#fafafa"
   };
-  border: 1px solid ${theme.palette.mode === 'dark' ? '#303030' : '#e8e8e8'};
+  border: 1px solid ${theme.palette.mode === "dark" ? "#303030" : "#e8e8e8"};
   border-radius: 2px;
   box-sizing: content-box;
   padding: 0 4px 0 10px;
@@ -75,8 +82,8 @@ const StyledTag = styled(Tag)<TagProps>(
   overflow: hidden;
 
   &:focus {
-    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
-    background-color: ${theme.palette.mode === 'dark' ? '#003b57' : '#e6f7ff'};
+    border-color: ${theme.palette.mode === "dark" ? "#177ddc" : "#40a9ff"};
+    background-color: ${theme.palette.mode === "dark" ? "#003b57" : "#e6f7ff"};
   }
 
   & span {
@@ -90,17 +97,17 @@ const StyledTag = styled(Tag)<TagProps>(
     cursor: pointer;
     padding: 4px;
   }
-`,
+`
 );
 
-const Listbox = styled('ul')(
+const Listbox = styled("ul")(
   ({ theme }) => `
   width: 300px;
   margin: 2px 0 0;
   padding: 0;
   position: absolute;
   list-style: none;
-  background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
+  background-color: ${theme.palette.mode === "dark" ? "#141414" : "#fff"};
   overflow: auto;
   max-height: 250px;
   border-radius: 4px;
@@ -121,7 +128,7 @@ const Listbox = styled('ul')(
   }
 
   & li[aria-selected='true'] {
-    background-color: ${theme.palette.mode === 'dark' ? '#2b2b2b' : '#fafafa'};
+    background-color: ${theme.palette.mode === "dark" ? "#2b2b2b" : "#fafafa"};
     font-weight: 600;
 
     & svg {
@@ -130,50 +137,66 @@ const Listbox = styled('ul')(
   }
 
   & li.${autocompleteClasses.focused} {
-    background-color: ${theme.palette.mode === 'dark' ? '#003b57' : '#e6f7ff'};
+    background-color: ${theme.palette.mode === "dark" ? "#003b57" : "#e6f7ff"};
     cursor: pointer;
 
     & svg {
       color: currentColor;
     }
   }
-`,
+`
 );
 
-export default function CustomizedHook({options, id, label, multiSelect}:any) {
-    const {
-        getRootProps,
-        getInputLabelProps,
-        getInputProps,
-        getTagProps,
-        getListboxProps,
-        getOptionProps,
-        groupedOptions,
-        value,
-        focused,
-        setAnchorEl,
-      } = useAutocomplete({
-        id,
-        defaultValue: [],
-        multiple: multiSelect,
-        options,
-        onChange: (event, value) => console.log(value),  // Logs the selected value
-      });
+export default function CustomizedHook({
+  options,
+  id,
+  label,
+  multiSelect,
+}: any) {
+  const {
+    getRootProps,
+    getInputLabelProps,
+    getInputProps,
+    getTagProps,
+    getListboxProps,
+    getOptionProps,
+    groupedOptions,
+    value,
+    focused,
+    setAnchorEl,
+  } = useAutocomplete({
+    id,
+    defaultValue: [],
+    multiple: multiSelect,
+    options,
+    onChange: (event, value) => handleFilterChange(value), // Logs the selected value
+  });
+  const dispatch = useDispatch<any>();
+
+  const handleFilterChange = (value: any) => {
+    dispatch(setFilters({value, filter: label}));
+  }
 
   return (
     <div>
       <div {...getRootProps()}>
-        <label {...getInputLabelProps()} className='select-label'>{label}</label>
-        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
-          {value?.map((option: any, index: number) => (
-            <StyledTag label={option} {...getTagProps({ index })} />
-          ))}
+        <label {...getInputLabelProps()} className="select-label">
+          {label}
+        </label>
+        <InputWrapper ref={setAnchorEl} className={focused ? "focused" : ""}>
+          {multiSelect ? (
+            value?.map((option: any, index: number) => (
+              <StyledTag label={option} {...getTagProps({ index })} />
+            ))
+          ) : (
+            <></>
+          )}
           <input {...getInputProps()} />
         </InputWrapper>
       </div>
       {groupedOptions.length > 0 ? (
         <Listbox {...getListboxProps()}>
-          {(groupedOptions as any).map((option:any, index:any) => (
+          {(groupedOptions as any).map((option: any, index: any) => (
             <li {...getOptionProps({ option, index })}>
               <span>{option}</span>
               <CheckIcon fontSize="small" />
@@ -184,4 +207,3 @@ export default function CustomizedHook({options, id, label, multiSelect}:any) {
     </div>
   );
 }
-
