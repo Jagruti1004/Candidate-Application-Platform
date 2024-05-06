@@ -3,7 +3,7 @@ import DetailPill from "../DetailPill";
 import JobFooter from "../JobFooter";
 import JobHeading from "../JobHeading";
 import "./style.css";
-import { Button, Card, Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 
 function JobCard({ job }: any) {
   const salaryText = useMemo(() => {

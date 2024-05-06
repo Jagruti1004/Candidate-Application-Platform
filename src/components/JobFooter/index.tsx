@@ -10,7 +10,7 @@ function JobFooter({ minExp, jdLink }: props) {
   return (
     <Box className="job-card-footer">
       <a href={jdLink}>View Job</a>
-      <div className="job-card-footer-experience">
+      <div className={`job-card-footer-experience ${!minExp && "is-hidden"}`}>
         <div className="job-card-footer-experience-title">
           Minimum Experience
         </div>

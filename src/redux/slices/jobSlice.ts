@@ -22,7 +22,6 @@ export const fetchJobs = createAsyncThunk(
       throw new Error(`HTTP error! status: ${response.status}`);
     } else {
       const data = await response.json();
-      console.log("uu", data);
       return data;
     }
   }
@@ -51,8 +50,6 @@ const jobSlice = createSlice({
   initialState,
   reducers: {
     setFilters: (state, action) => {
-      // state.filters = action.payload;
-      console.log(action,'action')
       if(action.payload.filter === 'Roles') {
         state.filters.jobRoles = action.payload.value;
       }
@@ -77,7 +74,6 @@ const jobSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchJobs.fulfilled, (state, action) => {
-        console.log("hello", action);
         state.loading = false;
         state.error = null;
         state.jobs = [...state.jobs, ...action.payload.jdList];
